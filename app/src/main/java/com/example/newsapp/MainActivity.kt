@@ -54,13 +54,13 @@ class MainActivity : AppCompatActivity() {
                     mAdapter.updateNews(newsArticle)
                 }
                 Log.d("news", NEWSLIST.toString())
-                mAdapter.setOnArticleClickListener(object : CustomNewsAdapter.NewsArticleClickListener{
-                    override fun onArticleClicked(position: Int) {
-                        val intent = Intent(this@MainActivity, ArticleDetailActivity::class.java)
-                        intent.putExtra("key", NEWSLIST.get(position))
-                        startActivity(intent)
-                    }
-                })
+//                mAdapter.setOnArticleClickListener(object : CustomNewsAdapter.NewsArticleClickListener{
+//                    override fun onArticleClicked(position: Int) {
+//                        val intent = Intent(this@MainActivity, ArticleDetailActivity::class.java)
+//                        intent.putExtra("key", NEWSLIST.get(position))
+//                        startActivity(intent)
+//                    }
+//                })
             }
             override fun onFailure(call: Call<NewsData?>, t: Throwable) {
                 swipeRefreshLayout.isRefreshing = false
