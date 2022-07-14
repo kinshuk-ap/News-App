@@ -18,17 +18,17 @@ class CustomNewsAdapter(): RecyclerView.Adapter<CustomNewsAdapter.ViewHolder>() 
     private val dataSet: ArrayList<Article> = ArrayList()
 
 
-//    private lateinit var mListener: NewsArticleClickListener
-//
-//    interface NewsArticleClickListener {
-//        fun onArticleClicked(position: Int)
-//    }
+    private lateinit var mListener: NewsArticleClickListener
 
-//    fun setOnArticleClickListener(listener: NewsArticleClickListener) {
-//        mListener = listener
-//    }
+    interface NewsArticleClickListener {
+        fun onArticleClicked(position: Int)
+    }
 
-    class ViewHolder(view: View/**, listener: NewsArticleClickListener**/): RecyclerView.ViewHolder(view) {
+    fun setOnArticleClickListener(listener: NewsArticleClickListener) {
+        mListener = listener
+    }
+
+    class ViewHolder(view: View, listener: NewsArticleClickListener): RecyclerView.ViewHolder(view) {
         val newsTitle: TextView
         val newsImg  : ImageView
         val newsDesc : TextView
@@ -38,9 +38,9 @@ class CustomNewsAdapter(): RecyclerView.Adapter<CustomNewsAdapter.ViewHolder>() 
             newsImg   = view.findViewById(R.id.newsImage)
             newsDesc  = view.findViewById(R.id.newsDesc)
 
-//            view.setOnClickListener {
-//                listener.onArticleClicked(adapterPosition)
-//            }
+            view.setOnClickListener {
+                listener.onArticleClicked(adapterPosition)
+            }
         }
     }
 
@@ -48,26 +48,13 @@ class CustomNewsAdapter(): RecyclerView.Adapter<CustomNewsAdapter.ViewHolder>() 
         val view = LayoutInflater
             .from(parent.context)
             .inflate(R.layout.news_display, parent, false)
-        return ViewHolder(view/**, mListener**/)
+        return ViewHolder(view, mListener)
     }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currNews = dataSet.get(position)
         holder.newsTitle.text = currNews.title
         holder.newsDesc.text = currNews.description
         Glide.with(holder.itemView.context).load(currNews.urlToImage).into(holder.newsImg)
-
-        holder.itemView.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(view: View?) {
-                val activity = view!!.context as AppCompatActivity
-                val articleDetailFragment = ArticleDetailFragment()
-
-                activity.supportFragmentManager.beginTransaction()
-                    .replace(R.id.mainActivity, articleDetailFragment)
-                    .addToBackStack(null)
-                    .commit()
-            }
-
-        })
 
     }
     override fun getItemCount(): Int {
